@@ -59,16 +59,15 @@ function convertTimeElements({ days, hours, minutes, seconds }) {
 
 function timer() {
     const deadLine = selectedTime;
-    const currentTime = Date.now();
-    const deltaTime = deadLine - currentTime;
+    const deltaTime = deadLine - Date.now();
     const timeElements = convertMs(deltaTime);
     convertTimeElements(timeElements);
 
     let timerId = setInterval(timer, 1000);
-    if (deltaTime === 0) {
+    if (deltaTime <= 0) {
         clearInterval(timerId);
-    };  
-};
+    };
+}; 
 
 refs.startBtn.addEventListener('click', timer);
 

@@ -23,6 +23,6 @@ refs.startBtn.addEventListener('click', changeBgColor);
 refs.stopBtn.addEventListener('click', () => {
     clearInterval(timerId);
     refs.startBtn.disabled = false;
-    refs.stopBtn.disabled = true;
+    
 });
 
