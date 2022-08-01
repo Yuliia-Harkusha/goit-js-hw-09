@@ -13,16 +13,22 @@ function getRandomHexColor() {
 const changeBgColor = () => {
     refs.startBtn.disabled = true;
     refs.stopBtn.disabled = false;
-    timerId = setInterval(() => {
+    const timerId = setInterval(() => {
         refs.body.style.backgroundColor = getRandomHexColor();
     }, 1000);
+
+    refs.stopBtn.addEventListener('click', () => {
+    clearInterval(timerId);
+    refs.startBtn.disabled = false;
+    refs.stopBtn.disabled = true;
+});
 };
 
 refs.startBtn.addEventListener('click', changeBgColor);
 
-refs.stopBtn.addEventListener('click', () => {
-    clearInterval(timerId);
-    refs.startBtn.disabled = false;
-    
-});
+// refs.stopBtn.addEventListener('click', () => {
+//     clearInterval(timerId);
+//     refs.startBtn.disabled = false;
+//     refs.stopBtn.disabled = true;
+// });
 
