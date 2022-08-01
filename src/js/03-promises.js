@@ -19,14 +19,10 @@ function formSubmit(e) {
     delay += step;
     createPromise(position, delay)
       .then(({ position, delay }) => {
-        setTimeout(() => {
           Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`, { useIcon: false });
-        }, delay);
       })
-      .catch(({ position, delay }) => {
-        setTimeout(() => {
+      .catch(({ position, delay }) => { 
           Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, { useIcon: false });
-        }, delay);
       });
   };
 };
@@ -36,10 +32,12 @@ function createPromise(position, delay) {
   const objectPromise = { position, delay };
 
   return new Promise((resolve, reject) => {
-    if (shouldResolve) {
-      resolve(objectPromise);
-    } else {
-      reject(objectPromise);
-    }  
+    setTimeout(() => {
+      if (shouldResolve) {
+        return resolve(objectPromise);
+      } else {
+        return reject(objectPromise);
+      };
+    }, delay)
   });
-};
+  };
