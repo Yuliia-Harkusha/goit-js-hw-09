@@ -2,8 +2,6 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-let selectedTime = null;
-
 const refs = {
     timePicker: document.querySelector("#datetime-picker"),
     startBtn: document.querySelector("button[data-start]"),
@@ -14,6 +12,9 @@ const refs = {
 };
 
 refs.startBtn.disabled = true;
+let selectedTime = null;
+let timerId;
+let deltaTime;
 
 const options = {
   enableTime: true,
@@ -57,19 +58,22 @@ function convertTimeElements({ days, hours, minutes, seconds }) {
     refs.secondsElement.textContent = seconds;
 };
 
-function timer() {
+refs.startBtn.addEventListener('click', () => {
+    timerId = setInterval(() => {
     const deadLine = selectedTime;
-    const deltaTime = deadLine - Date.now();
-    const timeElements = convertMs(deltaTime);
-    convertTimeElements(timeElements);
-
-    let timerId = setInterval(timer, 1000);
-    if (deltaTime <= 0) {
+    deltaTime = deadLine - Date.now();
+    let timeElements = convertMs(deltaTime);
+        convertTimeElements(timeElements);
+    if(Math.floor(deltaTime/1000) <= 0) {
         clearInterval(timerId);
-    };
-}; 
+        };
 
-refs.startBtn.addEventListener('click', timer);
+    refs.startBtn.disabled = true;
+    refs.timePicker.disabled = true;
+    }, 1000);
+});
+
+
 
 
 
